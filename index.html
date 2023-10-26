@@ -1,27 +1,60 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Caluladora</title>
-    </head>
-    <body>
 
-        <form action="index.html">
-            <label for="numeroIngressos">Insira a quantidade de ingressos vendidos:</label>
-                <input id="numeroIngressos" value="numIng" type="text">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caluladora</title>
+</head>
+
+<body>
+    <form>
+        <label for="ingressos">Insira a quantidade de pulseiras gastas:</label>
+        <input id="ingressos" value="" type="number">
+
         <br>
-            <label for="Valor">Insira o valor recebido sem o troco inicial:</label>
-                <input id="Valor" value="valor" type="int">
+        <label for="dinheiro">Insira o valor recebido sem o troco inicial:</label>
+        <input id="dinheiro" value="" type="number">
+
         <br>
-        <input type="button" value="*" onClick="document.calculator.ans.value+='*'">
-        <br>
-        <button onclick="numIng *= Valor" >Calcular</button>
-        <input type="button" value="=" onClick="document.calculator.ans.value=eval(document.calculator.ans.value)">Solution is <input type="textfield" name="ans" value="">
-        <br>
-            <label for="Resultado">Resultado: </label>
-                <h1>numeroIngressos * Valor</h1>
-        </form>
-    </body>
+        <input type="submit" value="Calcular" onclick="Enviar();">
+
+    </form>
+
+    <script>
+        // function Enviar() {
+        //     var ingressos = document.getElementById("ingressos");
+        //     var dinheiro = document.getElementById("dinheiro");
+
+        //     var calculo = (ingressos.value) * (dinheiro.value);
+
+        //     if (ingressos.value != "") {
+        //         alert('Foram Vendidos ' + calculo + ' Ingressos');
+        //     }
+        // }
+        function criarTabela(conteudo) {
+            var tabela = document.createElement("table");
+            var thead = document.createElement("thead");
+            var tbody = document.createElement("tbody");
+            var thd = function(i) {
+                return (i == 0) ? "th" : "td";
+            };
+            for (var i = 0; i < conteudo.length; i++) {
+                var tr = document.createElement("tr");
+                for (var o = 0; o < conteudo[i].length; o++) {
+                    var t = document.createElement(thd(i));
+                    var texto = document.createTextNode(conteudo[i][o]);
+                    t.appendChild(texto);
+                    tr.appendChild(t);
+                }
+                (i == 0) ? thead.appendChild(tr): tbody.appendChild(tr);
+            }
+            tabela.appendChild(thead);
+            tabela.appendChild(tbody);
+            return tabela;
+        }
+    </script>
+
+</body>
+
 </html>
-
