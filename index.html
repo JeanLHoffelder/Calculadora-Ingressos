@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Caluladora</title>
+    </head>
+    <body>
+
+        <form action="index.html">
+            <label for="numeroIngressos">Insira a quantidade de ingressos vendidos:</label>
+                <input id="numeroIngressos" value="numIng" type="text">
+        <br>
+            <label for="Valor">Insira o valor recebido sem o troco inicial:</label>
+                <input id="Valor" value="valor" type="int">
+        <br>
+        <input type="button" value="*" onClick="document.calculator.ans.value+='*'">
+        <br>
+        <button onclick="numIng *= Valor" >Calcular</button>
+        <input type="button" value="=" onClick="document.calculator.ans.value=eval(document.calculator.ans.value)">Solution is <input type="textfield" name="ans" value="">
+        <br>
+            <label for="Resultado">Resultado: </label>
+                <h1>numeroIngressos * Valor</h1>
+        </form>
+    </body>
+</html>
+
