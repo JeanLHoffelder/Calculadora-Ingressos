@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Calculadora de Ingressos</title>
+    <style>
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
 </head>
-
 <body>
     <h1>Calculadora de Ingressos</h1>
     <form id="calculator-form">
         <label for="quantity">Quantidade de Ingressos Vendidos:</label>
-        <input type="number" id="quantity" step="0.01" required>
+        <input type="number" id="quantity" step="1" required>
         <br>
 
         <label for="total-revenue">Valor Total Recebido (R$):</label>
@@ -35,25 +38,39 @@
             const ingressoPrice = 15.00; // Preço de um ingresso inteiro
             const meioIngressoPrice = 7.50; // Preço de um meio-ingresso
 
-            const ingressoCount = Math.floor(totalRevenue / ingressoPrice);
-            const meioIngressoCount = Math.floor(totalRevenue / meioIngressoPrice);
-
             const resultList = document.getElementById('result-list');
             resultList.innerHTML = ""; // Limpa a lista de resultados
 
-            for (let i = 0; i <= quantity; i += 0.5) {
+            let firstHighlight = null; // Variável para armazenar a primeira combinação destacada
+
+            for (let i = 0; i <= quantity; i++) {
                 const possibleIngressos = i;
                 const possibleMeioIngressos = quantity - i;
                 const totalPrice = possibleIngressos * ingressoPrice + possibleMeioIngressos * meioIngressoPrice;
 
+                const listItem = document.createElement('li');
                 if (totalPrice === totalRevenue) {
-                    const listItem = document.createElement('li');
-                    listItem.textContent = `Vender ${possibleIngressos} ingressos e ${possibleMeioIngressos} meio-ingressos.`;
-                    resultList.appendChild(listItem);
+                    if (!firstHighlight) {
+                        firstHighlight = `Vender ${possibleIngressos} ingressos e ${possibleMeioIngressos} meio-ingressos por R$${totalPrice.toFixed(2)}.`;
+                        listItem.textContent = firstHighlight;
+                        listItem.classList.add("highlight");
+                    } else {
+                        listItem.textContent = `Vender ${possibleIngressos} ingressos e ${possibleMeioIngressos} meio-ingressos por R$${totalPrice.toFixed(2)}.`;
+                    }
+                } else {
+                    listItem.textContent = `Possibilidade: ${possibleIngressos} ingressos e ${possibleMeioIngressos} meio-ingressos por R$${totalPrice.toFixed(2)}.`;
                 }
+
+                resultList.appendChild(listItem);
+            }
+
+            if (firstHighlight) {
+                const firstItem = document.createElement('li');
+                firstItem.textContent = firstHighlight;
+                firstItem.classList.add("highlight");
+                resultList.insertBefore(firstItem, resultList.firstChild);
             }
         }
     </script>
 </body>
-
 </html>
