@@ -1,66 +1,58 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caluladora</title>
+    <title>Calculadora de Ingressos</title>
 </head>
 
 <body>
-    <form>
-        <label for="ingressos">Insira a quantidade de pulseiras gastas:</label>
-        <input id="ingressos" value="" type="number">
-
+    <h1>Calculadora de Ingressos</h1>
+    <form id="calculator-form">
+        <label for="quantity">Quantidade de Ingressos Vendidos:</label>
+        <input type="number" id="quantity" step="0.01" required>
         <br>
-        <label for="dinheiro">Insira o valor recebido sem o troco inicial:</label>
-        <input id="dinheiro" value="" type="number">
 
+        <label for="total-revenue">Valor Total Recebido (R$):</label>
+        <input type="number" id="total-revenue" step="0.01" required>
         <br>
-        <input type="submit" value="Calcular" onclick="Enviar();">
+
+        <button type="button" onclick="calculateIngressos()">Calcular</button>
     </form>
 
+    <h2>Resultado:</h2>
+    <ul id="result-list"></ul>
+
     <script>
-        // function Enviar() {
-        //     var ingressos = document.getElementById("ingressos");
-        //     var dinheiro = document.getElementById("dinheiro");
+        function calculateIngressos() {
+            const quantity = parseFloat(document.getElementById('quantity').value);
+            const totalRevenue = parseFloat(document.getElementById('total-revenue').value);
 
-        //     var calculo = (ingressos.value) * (dinheiro.value);
+            if (isNaN(quantity) || isNaN(totalRevenue)) {
+                alert("Por favor, insira valores válidos.");
+                return;
+            }
 
-        //     if (ingressos.value != "") {
-        //         alert('Foram Vendidos ' + calculo + ' Ingressos');
-        //     }
-        // }
-        const root = document.getElementById('root')
+            const ingressoPrice = 15.00; // Preço de um ingresso inteiro
+            const meioIngressoPrice = 7.50; // Preço de um meio-ingresso
 
-        const pessoas = [{
-            name: 'Francisco',
-            age: 28,
+            const ingressoCount = Math.floor(totalRevenue / ingressoPrice);
+            const meioIngressoCount = Math.floor(totalRevenue / meioIngressoPrice);
 
-        }, {
-            name: 'Monize',
-            age: 23
-        }, {
-            name: 'José',
-            age: 44
-        }]
+            const resultList = document.getElementById('result-list');
+            resultList.innerHTML = ""; // Limpa a lista de resultados
 
-        const tableBody = pessoas.map((pessoa) => {
-            return `<tr>
-            <td>${pessoa.name}</td>
-            <td>${pessoa.age}</td>
-        </tr>`
-        }).join('')
+            for (let i = 0; i <= quantity; i += 0.5) {
+                const possibleIngressos = i;
+                const possibleMeioIngressos = quantity - i;
+                const totalPrice = possibleIngressos * ingressoPrice + possibleMeioIngressos * meioIngressoPrice;
 
-        const table = `<table>
-        <tr>
-            <td>Nome</td>
-            <td>Idade</td>
-        </tr>
-        ${tableBody}
-        </table>`;
-
-        root.insertAdjacentHTML('beforeend', table)
+                if (totalPrice === totalRevenue) {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `Vender ${possibleIngressos} ingressos e ${possibleMeioIngressos} meio-ingressos.`;
+                    resultList.appendChild(listItem);
+                }
+            }
+        }
     </script>
 </body>
 
